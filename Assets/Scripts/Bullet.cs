@@ -1,5 +1,6 @@
 using UnityEngine;
 
+[RequireComponent(typeof(Renderer))]
 public class Bullet : MonoBehaviour
 {
     [SerializeField] float bulletSpeed = 2f;
