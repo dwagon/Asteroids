@@ -7,6 +7,7 @@ public class Player : MonoBehaviour
 
     [SerializeField] GameObject firingPoint;
     [SerializeField] GameObject bulletObject;
+    [SerializeField] float rotateSpeed = 1f;
     [SerializeField] float fireCoolDown = 0.1f;
     float rotation = 0f;
     InputAction rotateAction;
@@ -28,8 +29,8 @@ public class Player : MonoBehaviour
 
     void DoMovement()
     {
-        rotation += rotateAction.ReadValue<Vector2>().x;
-        transform.eulerAngles = new Vector3(0f, 0f, rotation);
+        rotation = rotateAction.ReadValue<Vector2>().x * rotateSpeed * Time.deltaTime;
+        transform.RotateAround(new Vector3(-0.6f, 0.5f, 0f), Vector3.forward, rotation);
     }
 
     void DoFiring()
