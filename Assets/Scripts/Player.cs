@@ -30,7 +30,7 @@ public class Player : MonoBehaviour
     void DoMovement()
     {
         rotation = rotateAction.ReadValue<Vector2>().x * -rotateSpeed * Time.deltaTime;
-        transform.RotateAround(new Vector3(-0.6f, 0.5f, 0f), Vector3.forward, rotation);
+        transform.RotateAround(new Vector3(0f, 0f, 0f), Vector3.forward, rotation);
     }
 
     void DoFiring()
@@ -40,6 +40,15 @@ public class Player : MonoBehaviour
             GameObject new_bullet;
             new_bullet = Instantiate(bulletObject, firingPoint.transform.position, transform.rotation);
             lastFired = Time.time;
+        }
+    }
+
+    void OnTriggerEnter2D(Collider2D other)
+    {
+        Debug.Log(other.tag);
+        if (other.CompareTag("Asteroids"))
+        {
+            Debug.Log("Dead");
         }
     }
 }
