@@ -29,7 +29,7 @@ public class Player : MonoBehaviour
 
     void DoMovement()
     {
-        rotation = rotateAction.ReadValue<Vector2>().x * rotateSpeed * Time.deltaTime;
+        rotation = rotateAction.ReadValue<Vector2>().x * -rotateSpeed * Time.deltaTime;
         transform.RotateAround(new Vector3(-0.6f, 0.5f, 0f), Vector3.forward, rotation);
     }
 
