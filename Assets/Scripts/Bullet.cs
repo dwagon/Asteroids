@@ -20,4 +20,12 @@ public class Bullet : MonoBehaviour
             Destroy(gameObject);
         }
     }
+
+    void OnTriggerEnter2D(Collider2D other)
+    {
+        if (other.CompareTag("Asteroids"))
+        {
+            FindAnyObjectByType<Asteroid>().HitAsteroid();
+        }
+    }
 }
