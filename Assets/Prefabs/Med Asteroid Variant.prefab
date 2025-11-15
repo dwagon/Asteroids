@@ -9,6 +9,14 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 1737106787492202259, guid: effb31d58b18d43a4a3d0329ca3a7345, type: 3}
+      propertyPath: breakUp
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1737106787492202259, guid: effb31d58b18d43a4a3d0329ca3a7345, type: 3}
+      propertyPath: breakInto
+      value: 
+      objectReference: {fileID: 6610444742709578537, guid: c299ae76ab964499089005719a15f768, type: 3}
+    - target: {fileID: 1737106787492202259, guid: effb31d58b18d43a4a3d0329ca3a7345, type: 3}
       propertyPath: maxRotation
       value: 30
       objectReference: {fileID: 0}

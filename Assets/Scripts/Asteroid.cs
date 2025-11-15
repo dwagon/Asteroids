@@ -1,5 +1,7 @@
 using System;
+using Unity.Mathematics;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 [RequireComponent(typeof(Renderer))]
 [RequireComponent(typeof(SpriteRenderer))]
@@ -9,6 +11,8 @@ public class Asteroid : MonoBehaviour
     [SerializeField] float initialMaxVelocity = 1f;
     [SerializeField] float initialMinRotation = 10f;
     [SerializeField] float initialMaxRotation = 20f;
+    [SerializeField] bool breakUp = false;
+    [SerializeField] GameObject breakInto;
 
     Vector3 velocity;
     float rotation;
@@ -57,6 +61,20 @@ public class Asteroid : MonoBehaviour
             CheckOffScreen();
         }
 
+    }
+
+    public void HitAsteroid()
+    {
+        Quaternion quat;
+        Debug.Log("Hit asteroid");
+        if (breakUp)
+        {
+            quat = new Quaternion(0f, 0f, GenerateRotation(), 1);
+            Instantiate(breakInto, transform.position, quat);
+            quat = new Quaternion(0f, 0f, GenerateRotation(), 1);
+            Instantiate(breakInto, transform.position, quat);
+        }
+        Destroy(gameObject);
     }
 
     void CheckOffScreen()
