@@ -24,6 +24,22 @@ PrefabInstance:
       propertyPath: minVelocity
       value: -3
       objectReference: {fileID: 0}
+    - target: {fileID: 1751279557733743763, guid: eea1215acbb2240c0b5dfd51086084c4, type: 3}
+      propertyPath: velocityIncrease
+      value: 1.4
+      objectReference: {fileID: 0}
+    - target: {fileID: 1751279557733743763, guid: eea1215acbb2240c0b5dfd51086084c4, type: 3}
+      propertyPath: initialMaxRotation
+      value: 30
+      objectReference: {fileID: 0}
+    - target: {fileID: 1751279557733743763, guid: eea1215acbb2240c0b5dfd51086084c4, type: 3}
+      propertyPath: initialMaxVelocity
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 1751279557733743763, guid: eea1215acbb2240c0b5dfd51086084c4, type: 3}
+      propertyPath: initialMinRotation
+      value: 20
+      objectReference: {fileID: 0}
     - target: {fileID: 1807122602967198716, guid: eea1215acbb2240c0b5dfd51086084c4, type: 3}
       propertyPath: m_Name
       value: Small Asteroid Variant

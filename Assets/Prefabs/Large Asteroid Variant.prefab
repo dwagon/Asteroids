@@ -8,9 +8,13 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1737106787492202259, guid: effb31d58b18d43a4a3d0329ca3a7345, type: 3}
+      propertyPath: velocityIncrease
+      value: 5
+      objectReference: {fileID: 0}
     - target: {fileID: 1820169477594779772, guid: effb31d58b18d43a4a3d0329ca3a7345, type: 3}
       propertyPath: m_Name
-      value: Asteroid Variant
+      value: Large Asteroid Variant
       objectReference: {fileID: 0}
     - target: {fileID: 8679788505074542324, guid: effb31d58b18d43a4a3d0329ca3a7345, type: 3}
       propertyPath: m_LocalPosition.x

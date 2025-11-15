@@ -24,6 +24,22 @@ PrefabInstance:
       propertyPath: minVelocity
       value: -2
       objectReference: {fileID: 0}
+    - target: {fileID: 1737106787492202259, guid: effb31d58b18d43a4a3d0329ca3a7345, type: 3}
+      propertyPath: velocityIncrease
+      value: 1.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1737106787492202259, guid: effb31d58b18d43a4a3d0329ca3a7345, type: 3}
+      propertyPath: initialMaxRotation
+      value: 25
+      objectReference: {fileID: 0}
+    - target: {fileID: 1737106787492202259, guid: effb31d58b18d43a4a3d0329ca3a7345, type: 3}
+      propertyPath: initialMaxVelocity
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1737106787492202259, guid: effb31d58b18d43a4a3d0329ca3a7345, type: 3}
+      propertyPath: initialMinRotation
+      value: 15
+      objectReference: {fileID: 0}
     - target: {fileID: 1820169477594779772, guid: effb31d58b18d43a4a3d0329ca3a7345, type: 3}
       propertyPath: m_Name
       value: Med Asteroid Variant
