@@ -1,5 +1,5 @@
-using System;
-using Unity.Mathematics;
+// using System;
+// using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.UIElements;
 
@@ -17,19 +17,20 @@ public class Asteroid : MonoBehaviour
     Vector3 velocity;
     float rotation;
     Renderer a_renderer;
-    SpriteRenderer a_sprite;
     Camera a_camera;
 
     void Awake()
     {
-        velocity = GenerateVelocity();
-        rotation = GenerateRotation();
-
-
         a_renderer = GetComponent<Renderer>();
-        a_sprite = GetComponent<SpriteRenderer>();
         a_camera = GameObject.FindAnyObjectByType<Camera>();
     }
+
+    void Start()
+    {
+        velocity = GenerateVelocity();
+        rotation = GenerateRotation();
+    }
+
 
     float GenerateRotation()
     // Initial Rotation Speed - nothing too slow
@@ -47,9 +48,31 @@ public class Asteroid : MonoBehaviour
     Vector3 GenerateVelocity()
     // Initial Velocity
     {
-        float vel_x = UnityEngine.Random.Range(-initialMaxVelocity, initialMaxVelocity);
-        float vel_y = UnityEngine.Random.Range(-initialMaxVelocity, initialMaxVelocity);
+        float vel_x = Random.Range(-initialMaxVelocity, initialMaxVelocity);
+        float vel_y = Random.Range(-initialMaxVelocity, initialMaxVelocity);
         return new Vector3(vel_x, vel_y, 0f);
+    }
+
+    public Vector3 GeneratePosition()
+    {
+        int side = Random.Range(0, 3);
+        Vector3 random_loc = new(Random.Range(0f, 1f), Random.Range(0f, 1f), a_camera.nearClipPlane);
+        switch (side)
+        {
+            case 0:
+                random_loc.y = 1f;
+                break;
+            case 1:
+                random_loc.x = 1f;
+                break;
+            case 2:
+                random_loc.y = 0f;
+                break;
+            case 3:
+                random_loc.x = 0f;
+                break;
+        }
+        return a_camera.ViewportToWorldPoint(random_loc);
     }
 
     void Update()
@@ -60,7 +83,6 @@ public class Asteroid : MonoBehaviour
         {
             CheckOffScreen();
         }
-
     }
 
     public void HitAsteroid()
@@ -89,7 +111,7 @@ public class Asteroid : MonoBehaviour
     // Make asteroids wrap
     {
         Vector2 screen_position = a_camera.WorldToScreenPoint(transform.position);
-        float camera_z = a_camera.transform.position.z;
+        float camera_z = a_camera.nearClipPlane;
 
         if (screen_position.y < 0)    // Bottom of screen
         {
