@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEngine.UIElements;
 using UnityEngine.InputSystem;
 
+[RequireComponent(typeof(ParticleSystem))]
 public class Player : MonoBehaviour
 {
 
@@ -13,12 +14,16 @@ public class Player : MonoBehaviour
     InputAction rotateAction;
     InputAction fireAction;
     float lastFired;
+    ParticleSystem explosion;
+    SpriteRenderer spriteRenderer;
 
     void Start()
     {
         lastFired = Time.time;
         rotateAction = InputSystem.actions.FindAction("Move");
         fireAction = InputSystem.actions.FindAction("Attack");
+        explosion = GetComponent<ParticleSystem>();
+        spriteRenderer = GetComponentInChildren<SpriteRenderer>();
     }
 
     void Update()
@@ -45,10 +50,15 @@ public class Player : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D other)
     {
-        Debug.Log(other.tag);
         if (other.CompareTag("Asteroids"))
         {
-            Debug.Log("Dead");
+            PlayerDeath();
         }
+    }
+
+    void PlayerDeath()
+    {
+        spriteRenderer.enabled = false;
+        explosion.Play();
     }
 }
