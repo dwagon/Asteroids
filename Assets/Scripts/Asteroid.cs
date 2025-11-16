@@ -66,7 +66,6 @@ public class Asteroid : MonoBehaviour
     public void HitAsteroid()
     {
         Quaternion quat;
-        Debug.Log("Hit asteroid");
         if (breakUp)
         {
             quat = new Quaternion(0f, 0f, GenerateRotation(), 1);
@@ -75,6 +74,15 @@ public class Asteroid : MonoBehaviour
             Instantiate(breakInto, transform.position, quat);
         }
         Destroy(gameObject);
+    }
+
+    void OnTriggerEnter2D(Collider2D other)
+    {
+        if (other.CompareTag("Bullets"))
+        {
+            HitAsteroid();
+            Destroy(other.gameObject);  // Delete the bullet
+        }
     }
 
     void CheckOffScreen()

@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEngine.UIElements;
 using UnityEngine.InputSystem;
 
+[RequireComponent(typeof(ParticleSystem))]
 public class Player : MonoBehaviour
 {
 
@@ -13,12 +14,16 @@ public class Player : MonoBehaviour
     InputAction rotateAction;
     InputAction fireAction;
     float lastFired;
+    ParticleSystem explosion;
+    SpriteRenderer spriteRenderer;
 
     void Start()
     {
         lastFired = Time.time;
         rotateAction = InputSystem.actions.FindAction("Move");
         fireAction = InputSystem.actions.FindAction("Attack");
+        explosion = GetComponent<ParticleSystem>();
+        spriteRenderer = GetComponentInChildren<SpriteRenderer>();
     }
 
     void Update()
@@ -30,7 +35,7 @@ public class Player : MonoBehaviour
     void DoMovement()
     {
         rotation = rotateAction.ReadValue<Vector2>().x * -rotateSpeed * Time.deltaTime;
-        transform.RotateAround(new Vector3(-0.6f, 0.5f, 0f), Vector3.forward, rotation);
+        transform.RotateAround(new Vector3(0f, 0f, 0f), Vector3.forward, rotation);
     }
 
     void DoFiring()
@@ -41,5 +46,19 @@ public class Player : MonoBehaviour
             new_bullet = Instantiate(bulletObject, firingPoint.transform.position, transform.rotation);
             lastFired = Time.time;
         }
+    }
+
+    void OnTriggerEnter2D(Collider2D other)
+    {
+        if (other.CompareTag("Asteroids"))
+        {
+            PlayerDeath();
+        }
+    }
+
+    void PlayerDeath()
+    {
+        spriteRenderer.enabled = false;
+        explosion.Play();
     }
 }
