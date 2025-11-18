@@ -14,6 +14,7 @@ public class Asteroid : MonoBehaviour
     [SerializeField] bool breakUp = false;
     [SerializeField] GameObject breakInto;
     [SerializeField] int score = 0;
+    [SerializeField] AudioClip explosionSound;
 
     GameManager gameManager;
     Vector3 velocity;
@@ -110,6 +111,7 @@ public class Asteroid : MonoBehaviour
                 SplitAsteroid();
             }
             gameManager.KilledAsteroid(score);
+            AudioSource.PlayClipAtPoint(explosionSound, transform.position);
             Destroy(gameObject);
 
             Destroy(other.gameObject);  // Delete the bullet
