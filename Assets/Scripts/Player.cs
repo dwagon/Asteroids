@@ -10,12 +10,15 @@ public class Player : MonoBehaviour
     [SerializeField] GameObject bulletObject;
     [SerializeField] float rotateSpeed = 1f;
     [SerializeField] float fireCoolDown = 0.1f;
+    [SerializeField] AudioClip shoot_sound;
+    [SerializeField] AudioClip playerDeath_sound;
+
     float rotation = 0f;
     InputAction rotateAction;
     InputAction fireAction;
     float lastFired;
     ParticleSystem explosion;
-    SpriteRenderer spriteRenderer;
+    SpriteRenderer my_spriteRenderer;
 
     void Start()
     {
@@ -23,7 +26,7 @@ public class Player : MonoBehaviour
         rotateAction = InputSystem.actions.FindAction("Move");
         fireAction = InputSystem.actions.FindAction("Attack");
         explosion = GetComponent<ParticleSystem>();
-        spriteRenderer = GetComponentInChildren<SpriteRenderer>();
+        my_spriteRenderer = GetComponentInChildren<SpriteRenderer>();
     }
 
     void Update()
@@ -42,8 +45,8 @@ public class Player : MonoBehaviour
     {
         if (fireAction.IsPressed() && Time.time > lastFired + fireCoolDown)
         {
-            GameObject new_bullet;
-            new_bullet = Instantiate(bulletObject, firingPoint.transform.position, transform.rotation);
+            AudioSource.PlayClipAtPoint(shoot_sound, transform.position);
+            Instantiate(bulletObject, firingPoint.transform.position, transform.rotation);
             lastFired = Time.time;
         }
     }
@@ -58,7 +61,8 @@ public class Player : MonoBehaviour
 
     void PlayerDeath()
     {
-        spriteRenderer.enabled = false;
+        my_spriteRenderer.enabled = false;
         explosion.Play();
+        AudioSource.PlayClipAtPoint(playerDeath_sound, transform.position);
     }
 }

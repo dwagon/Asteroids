@@ -37,6 +37,10 @@ PrefabInstance:
       value: -2
       objectReference: {fileID: 0}
     - target: {fileID: 1737106787492202259, guid: effb31d58b18d43a4a3d0329ca3a7345, type: 3}
+      propertyPath: explosionSound
+      value: 
+      objectReference: {fileID: 8300000, guid: 8ac9cb8992ac34b65879d64cfbab1b08, type: 3}
+    - target: {fileID: 1737106787492202259, guid: effb31d58b18d43a4a3d0329ca3a7345, type: 3}
       propertyPath: velocityIncrease
       value: 1.2
       objectReference: {fileID: 0}
