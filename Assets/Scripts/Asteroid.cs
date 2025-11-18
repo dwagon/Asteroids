@@ -13,7 +13,9 @@ public class Asteroid : MonoBehaviour
     [SerializeField] float initialMaxRotation = 20f;
     [SerializeField] bool breakUp = false;
     [SerializeField] GameObject breakInto;
+    [SerializeField] int score = 0;
 
+    GameManager gameManager;
     Vector3 velocity;
     float rotation;
     Renderer a_renderer;
@@ -22,7 +24,8 @@ public class Asteroid : MonoBehaviour
     void Awake()
     {
         a_renderer = GetComponent<Renderer>();
-        a_camera = GameObject.FindAnyObjectByType<Camera>();
+        a_camera = FindAnyObjectByType<Camera>();
+        gameManager = FindAnyObjectByType<GameManager>();
     }
 
     void Start()
@@ -85,24 +88,30 @@ public class Asteroid : MonoBehaviour
         }
     }
 
-    public void HitAsteroid()
+    public void SplitAsteroid()
     {
         Quaternion quat;
-        if (breakUp)
-        {
-            quat = new Quaternion(0f, 0f, GenerateRotation(), 1);
-            Instantiate(breakInto, transform.position, quat);
-            quat = new Quaternion(0f, 0f, GenerateRotation(), 1);
-            Instantiate(breakInto, transform.position, quat);
-        }
-        Destroy(gameObject);
+
+        quat = new Quaternion(0f, 0f, GenerateRotation(), 1);
+        Instantiate(breakInto, transform.position, quat);
+        gameManager.CreatedAsteroid();
+
+        quat = new Quaternion(0f, 0f, GenerateRotation(), 1);
+        Instantiate(breakInto, transform.position, quat);
+        gameManager.CreatedAsteroid();
     }
 
     void OnTriggerEnter2D(Collider2D other)
     {
         if (other.CompareTag("Bullets"))
         {
-            HitAsteroid();
+            if (breakUp)
+            {
+                SplitAsteroid();
+            }
+            gameManager.KilledAsteroid(score);
+            Destroy(gameObject);
+
             Destroy(other.gameObject);  // Delete the bullet
         }
     }
