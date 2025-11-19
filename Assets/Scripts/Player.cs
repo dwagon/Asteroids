@@ -14,11 +14,13 @@ public class Player : MonoBehaviour
     [SerializeField] AudioClip playerDeath_sound;
 
     float rotation = 0f;
+    bool isAlive = true;
     InputAction rotateAction;
     InputAction fireAction;
     float lastFired;
     ParticleSystem explosion;
     SpriteRenderer my_spriteRenderer;
+    GameManager my_gameManager;
 
     void Start()
     {
@@ -26,13 +28,18 @@ public class Player : MonoBehaviour
         rotateAction = InputSystem.actions.FindAction("Move");
         fireAction = InputSystem.actions.FindAction("Attack");
         explosion = GetComponent<ParticleSystem>();
+        my_gameManager = FindFirstObjectByType<GameManager>();
         my_spriteRenderer = GetComponentInChildren<SpriteRenderer>();
+        isAlive = true;
     }
 
     void Update()
     {
-        DoMovement();
-        DoFiring();
+        if (isAlive)
+        {
+            DoMovement();
+            DoFiring();
+        }
     }
 
     void DoMovement()
@@ -53,7 +60,7 @@ public class Player : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.CompareTag("Asteroids"))
+        if (isAlive && other.CompareTag("Asteroids"))
         {
             PlayerDeath();
         }
@@ -61,8 +68,17 @@ public class Player : MonoBehaviour
 
     void PlayerDeath()
     {
+        isAlive = false;
         my_spriteRenderer.enabled = false;
         explosion.Play();
         AudioSource.PlayClipAtPoint(playerDeath_sound, transform.position);
+        my_gameManager.PlayerDeath();
+    }
+
+    public void PlayerAlive()
+    {
+        isAlive = true;
+        my_spriteRenderer.enabled = true;
+
     }
 }
