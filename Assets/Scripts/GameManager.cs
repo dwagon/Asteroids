@@ -1,13 +1,13 @@
 using UnityEngine;
 using TMPro;
-using System.Collections.Generic;
 using System.Collections;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
     [SerializeField] TMP_Text scoreText;
     [SerializeField] int numAsteroids;
-    [SerializeField] int numLives = 3;
+    [SerializeField] int maxNumLives = 3;
     [SerializeField] TMP_Text lifeText;
     [SerializeField] float timeToWaitForPlayerLife = 2;
 
@@ -15,6 +15,7 @@ public class GameManager : MonoBehaviour
     Spawner asteroidSpawner;
     Player player;
     int score = 0;
+    int numLives;
 
 
     private static GameManager _instance;
@@ -34,6 +35,7 @@ public class GameManager : MonoBehaviour
     void Start()
     {
         scoreText.text = score.ToString();
+        numLives = maxNumLives;
         lifeText.text = numLives + " Lives";
 
         currentAsteroids = asteroidSpawner.Spawn(numAsteroids).Count;
@@ -73,12 +75,25 @@ public class GameManager : MonoBehaviour
         {
             StartCoroutine(RestartPlayer());
         }
+        else
+        {
+            StartCoroutine(RestartGame());
+            numLives = maxNumLives;
+            score = 0;
+        }
     }
 
     IEnumerator RestartPlayer()
     {
         yield return new WaitForSeconds(timeToWaitForPlayerLife);
         player.PlayerAlive();
+
+    }
+
+    IEnumerator RestartGame()
+    {
+        yield return new WaitForSeconds(timeToWaitForPlayerLife);
+        SceneManager.LoadScene(0);
     }
 
 }
