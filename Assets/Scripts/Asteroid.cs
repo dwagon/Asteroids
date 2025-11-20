@@ -95,11 +95,9 @@ public class Asteroid : MonoBehaviour
 
         quat = new Quaternion(0f, 0f, GenerateRotation(), 1);
         Instantiate(breakInto, transform.position, quat);
-        gameManager.CreatedAsteroid();
 
         quat = new Quaternion(0f, 0f, GenerateRotation(), 1);
         Instantiate(breakInto, transform.position, quat);
-        gameManager.CreatedAsteroid();
     }
 
     void OnTriggerEnter2D(Collider2D other)

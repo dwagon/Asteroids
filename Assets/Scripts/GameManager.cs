@@ -9,14 +9,14 @@ public class GameManager : MonoBehaviour
     [SerializeField] int numAsteroids;
     [SerializeField] int maxNumLives = 3;
     [SerializeField] TMP_Text lifeText;
-    [SerializeField] float timeToWaitForPlayerLife = 2;
+    [SerializeField] float timeToWaitForPlayerLife = 2f;
+    [SerializeField] float timeToSpawnAsteroid = 5f;
 
-    int currentAsteroids;
     Spawner asteroidSpawner;
     Player player;
     int score = 0;
     int numLives;
-
+    bool isSpawning = false;
 
     private static GameManager _instance;
 
@@ -38,7 +38,7 @@ public class GameManager : MonoBehaviour
         numLives = maxNumLives;
         lifeText.text = numLives + " Lives";
 
-        currentAsteroids = asteroidSpawner.Spawn(numAsteroids).Count;
+        asteroidSpawner.SpawnAsteroids(numAsteroids);
     }
 
     void AddScore(int value)
@@ -49,22 +49,17 @@ public class GameManager : MonoBehaviour
 
     public void KilledAsteroid(int asteroid_score)
     {
-        currentAsteroids--;
         AddScore(asteroid_score);
     }
 
-    public void CreatedAsteroid()
-    {
-        currentAsteroids++;
-    }
 
     void Update()
     {
-        if (currentAsteroids < numAsteroids)
+        if (!isSpawning)
         {
-            currentAsteroids += asteroidSpawner.Spawn(numAsteroids - currentAsteroids).Count;
+            isSpawning = true;
+            StartCoroutine(SpawnAsteroid());
         }
-
     }
 
     public void PlayerDeath()
@@ -81,6 +76,13 @@ public class GameManager : MonoBehaviour
             numLives = maxNumLives;
             score = 0;
         }
+    }
+
+    IEnumerator SpawnAsteroid()
+    {
+        yield return new WaitForSeconds(timeToSpawnAsteroid);
+        asteroidSpawner.SpawnAsteroid();
+        isSpawning = false;
     }
 
     IEnumerator RestartPlayer()

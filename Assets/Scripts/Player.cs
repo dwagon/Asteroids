@@ -51,7 +51,7 @@ public class Player : MonoBehaviour
     {
         if (fireAction.IsPressed() && Time.time > lastFired + fireCoolDown)
         {
-            AudioSource.PlayClipAtPoint(shoot_sound, transform.position);
+            AudioSource.PlayClipAtPoint(shoot_sound, transform.position, 0.5f);
             Instantiate(bulletObject, firingPoint.transform.position, transform.rotation);
             lastFired = Time.time;
         }
